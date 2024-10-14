@@ -1,6 +1,16 @@
+
+using EmployeeManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// estalish Connection String 
+var connectionString = builder.Configuration.GetConnectionString("EmployeeDB");
+builder.Services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(connectionString));
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
