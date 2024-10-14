@@ -434,11 +434,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Sure\\EmployeeManagementSystem\\EmployeeManagementSystem.csproj",
+      "projectUniqueName": "C:\\Users\\amr\\Source\\Repos\\newRep\\EmployeeManagementSystem\\EmployeeManagementSystem.csproj",
       "projectName": "EmployeeManagementSystem",
-      "projectPath": "G:\\Sure\\EmployeeManagementSystem\\EmployeeManagementSystem.csproj",
+      "projectPath": "C:\\Users\\amr\\Source\\Repos\\newRep\\EmployeeManagementSystem\\EmployeeManagementSystem.csproj",
       "packagesPath": "C:\\Users\\amr\\.nuget\\packages\\",
-      "outputPath": "G:\\Sure\\EmployeeManagementSystem\\obj\\",
+      "outputPath": "C:\\Users\\amr\\Source\\Repos\\newRep\\EmployeeManagementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
