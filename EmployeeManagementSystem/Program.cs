@@ -17,10 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("EmployeeDB");
 builder.Services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(connectionString));
 
-// extract data from jwt settings and send it to jwt service to create tokens
-//string jwtKey = builder.Configuration.GetValue<string>("jwtSettings:Key");
-//string jwtIssuer = builder.Configuration.GetValue<string>("JwtSettings:Issuer");
-//string jwtAudience = builder.Configuration.GetValue<string>("JwtSettings:Audience");
+// cors policy
+builder.Services.AddCors(options => options.AddPolicy(name: "AnyCors", policy =>
+{
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+}));
 
 builder.Services.AddScoped<JwtService>(sp =>
 {
@@ -71,7 +72,7 @@ builder.Services.AddEndpointsApiExplorer();
 // add authorization part to swagger to add token
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Employee Management System", Version = "v1" });
 
     // Add JWT bearer authentication support
     var securityScheme = new OpenApiSecurityScheme
@@ -117,7 +118,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AnyCors");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

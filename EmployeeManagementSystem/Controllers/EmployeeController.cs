@@ -56,9 +56,16 @@ namespace EmployeeManagementSystem.Controllers
         public async Task<ActionResult> AddEmployee(EmployeeDTO employee)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest(new { message = ModelState });
+            // Check if the email already exists
+            var existingEmployee = await _dbContext.Employees
+                .FirstOrDefaultAsync(e => e.Email == employee.Email && !e.IsDeleted);
 
-          
+            if (existingEmployee != null)
+            {
+                return BadRequest( new { message = "An employee with this email already exists." });
+            }
+
             var Addemployee = new Employee
             {
                 FirstName = employee.FirstName,
@@ -72,7 +79,7 @@ namespace EmployeeManagementSystem.Controllers
 
             _dbContext.Employees.Add(Addemployee);
             await _dbContext.SaveChangesAsync();
-            return Ok("Employee Added Successfully");
+            return Ok(new { message = "Employee added successfully!" });
         }
 
         [HttpPost("UnDeleteEmployee/{employeeId}")]
@@ -87,7 +94,7 @@ namespace EmployeeManagementSystem.Controllers
 
             if (!employee.IsDeleted)
             {
-                return BadRequest("The Employee is not deleted to undelete him .");
+                return BadRequest( new { message = "The Employee is not deleted to undelete him ." });
             }
 
             // Mark the employee as undeleted
@@ -96,7 +103,7 @@ namespace EmployeeManagementSystem.Controllers
             try
             {
                 await _dbContext.SaveChangesAsync();
-                return Ok("Employee is retrieved successfully.");
+                return Ok(new { message = "Employee is retrieved successfully." });
             }
             catch (Exception ex)
             {
@@ -132,7 +139,7 @@ namespace EmployeeManagementSystem.Controllers
             try
             {
                 await _dbContext.SaveChangesAsync();
-                return Ok("Employee updated successfully.");
+                return Ok(new { message = "Employee updated successfully." });
             }
             catch (Exception ex)
             {
@@ -157,7 +164,7 @@ namespace EmployeeManagementSystem.Controllers
             try
             {
                 await _dbContext.SaveChangesAsync();
-                return Ok("Employee is deleted successfully.");
+                return Ok(new { message = "Employee is deleted successfully." });
             }
             catch (Exception ex)
             {
